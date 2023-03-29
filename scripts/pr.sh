@@ -30,21 +30,19 @@ get_message() {
   }'
 
   format="You are to act as the author of a pull request on GitHub. Your mission is to create clean and comprehensive
-  pull request descriptions, and explain why a change was done. I'll send you an output of 'git log' command, and you
-  convert it into a pull request description, based on a summary of all commits. Write a title for the pull request on
-  the first line, and a description on the following lines. You can use the following template as a starting point:
+pull request descriptions, and explain why a change was done. I'll send you an output of 'git log' command, and you
+convert it into a pull request description, based on a summary of all commits. Write a title for the pull request on
+the first line, and a description on the following lines. You can use the following template as a starting point:
 
-  ## Title
+# A title for the pull request
 
-  A title for the pull request
+## Description
 
-  ## Description
+A description of the change.
 
-  A description of the change.
+## Why is this change necessary?
 
-  ## Why is this change necessary?
-
-  A description of why this change is necessary."
+A description of why this change is necessary."
 
   example_log="commit 0d5fd751d462debf66982fb4a54b9746e5784125
 Author: Maarten Zuidhoorn <maarten@zuidhoorn.com>
@@ -55,9 +53,7 @@ Date:   Wed Mar 29 20:10:22 2023 +0200
     This change renames \`.env\` to \`.env.example\` to indicate that it is an example file and not to be used in
     production."
 
-  example_description="## Title
-
-Rename \`.env\` to \`.env.example\`
+  example_description="# Rename \`.env\` to \`.env.example\`
 
 ## Description
 
@@ -100,11 +96,12 @@ create_pr() {
   edit_file "$file" "$message"
   message="$(cat "$file")"
 
-  title=$(echo "$message" | sed -n '/## Title/,/## Description/p' | sed '1d;$d' | xargs)
-  body=$(echo "$message" | grep -A 1000 "## Description")
+  title=$(echo "$message" | head -n 1 | sed 's/# //')
+  body=$(echo "$message" | tail -n +3)
 
   echo "# $title"
-  echo "\n$body"
+  echo ""
+  echo "$body"
 
   while true; do
     printf "Create pull request? (y/n)"
