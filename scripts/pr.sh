@@ -82,8 +82,23 @@ This change is important to maintain the security of our project and protect aga
   echo "$message"
 }
 
+# Edit file with the editor.
+edit_file() {
+  file="$1"
+  contents="$2"
+
+  echo "$contents" > "$file"
+
+  editor=${EDITOR:-nano}
+  "$editor" "$file"
+}
+
 create_pr() {
   message=$(get_message)
+
+  file=$(mktemp)
+  edit_file "$file" "$message"
+  message="$(cat "$file")"
 
   title=$(echo "$message" | sed -n '/## Title/,/## Description/p' | sed '1d;$d' | xargs)
   body=$(echo "$message" | grep -A 1000 "## Description")

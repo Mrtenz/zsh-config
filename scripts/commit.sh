@@ -83,9 +83,24 @@ The port variable is a constant, so it should be in uppercase."
   echo "$message"
 }
 
+# Edit file with the editor.
+edit_file() {
+  file="$1"
+  contents="$2"
+
+  echo "$contents" > "$file"
+
+  editor=${EDITOR:-nano}
+  "$editor" "$file"
+}
+
 # Create a commit with the message from OpenAI.
 create_commit() {
   message="$(get_message)"
+
+  file=$(mktemp)
+  edit_file "$file" "$message"
+  message="$(cat "$file")"
 
   echo "$message"
 
