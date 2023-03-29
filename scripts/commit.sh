@@ -29,21 +29,10 @@ template:
 
 Summarize changes in around 50 characters or less, using a single sentence
 
-More detailed explanatory text, if necessary. Wrap it to about 72
-characters or so. In some contexts, the first line is treated as the
-subject of the commit and the rest of the text as the body. The
-blank line separating the summary from the body is critical (unless
-you omit the body entirely); various tools like \`log\`, \`shortlog\`
-and \`rebase\` can get confused if you run the two together.
-
 Explain the problem that this commit is solving. Focus on why you
 are making this change as opposed to how (the code explains that).
 Are there side effects or other unintuitive consequences of this
-change? Here's the place to explain them.
-
-Further paragraphs come after blank lines.
-
-- Bullet points are okay, too"
+change? Here's the place to explain them."
 
   example_diff="diff --git a/src/server.ts b/src/server.ts
 index ad4db42..f3b18a9 100644
