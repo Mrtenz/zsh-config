@@ -85,7 +85,19 @@ The port variable is a constant, so it should be in uppercase."
 
 # Create a commit with the message from OpenAI.
 create_commit() {
-  git commit -am "$(get_message)"
+  message="$(get_message)"
+
+  echo "$message"
+
+  while true; do
+    printf "Commit? (y/n)"
+    read yn
+    case $yn in
+      [Yy]* ) git commit -am "$message"; break;;
+      [Nn]* ) break;;
+      * ) echo "Please answer yes or no.";;
+    esac
+  done
 }
 
 create_commit
