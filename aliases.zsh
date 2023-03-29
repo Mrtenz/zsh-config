@@ -7,3 +7,6 @@ alias dev="source $ZSH_CUSTOM/scripts/dev.sh"
 
 # Alias for "commit" script.
 alias commit="$ZSH_CUSTOM/scripts/commit.sh"
+
+# Alias for "pr" script.
+alias pr="$ZSH_CUSTOM/scripts/pr.sh"

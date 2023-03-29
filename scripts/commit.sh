@@ -4,7 +4,7 @@ API_URL="https://api.openai.com/v1/chat/completions"
 
 # Check if token is set.
 if [[ ! -v OPENAI_TOKEN ]]; then
-  echo "SOME_VARIABLE is not set"
+  echo "OPENAI_TOKEN is not set"
   exit 1
 fi
 
