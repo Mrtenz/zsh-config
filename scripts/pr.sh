@@ -8,6 +8,11 @@ if [[ ! -v OPENAI_TOKEN ]]; then
   exit 1
 fi
 
+trap clean_up EXIT
+
+tput civis
+revolver start "Fetching Git information..."
+
 GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 GIT_REMOTE=$(git remote)
 GIT_MAIN_BRANCH=$(git remote show "$GIT_REMOTE" | sed -n '/HEAD branch/s/.*: //p')
@@ -89,8 +94,17 @@ edit_file() {
   "$editor" "$file"
 }
 
+clean_up() {
+  tput cnorm
+}
+
 create_pr() {
+  revolver update "Generating pull request description..."
+
   message=$(get_message)
+
+  revolver stop
+  tput cnorm
 
   file=$(mktemp)
   edit_file "$file" "$message"
@@ -107,11 +121,19 @@ create_pr() {
     printf "Create pull request? (y/n)"
     read yn
     case $yn in
-      [Yy]* ) gh pr create --title "$title" --body "$body"; break;;
-      [Nn]* ) break;;
+      [Yy]* ) break;;
+      [Nn]* ) exit 0;;
       * ) echo "Please answer yes or no.";;
     esac
   done
+
+  tput civis
+  revolver start "Creating pull request..."
+
+  gh pr create --title "$title" --body "$body";
+
+  revolver stop
+  tput cnorm
 }
 
 create_pr
