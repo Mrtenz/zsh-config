@@ -96,9 +96,7 @@ edit_file() {
   contents="$2"
 
   echo "$contents" > "$file"
-
-  editor=${EDITOR:-nano}
-  "$editor" "$file"
+  open -t --wait-apps "$file"
 }
 
 create_pr() {
@@ -106,12 +104,14 @@ create_pr() {
 
   message=$(get_message)
 
-  revolver stop
-  tput cnorm
+  revolver update "Waiting for editor to close..."
 
   file=$(mktemp)
   edit_file "$file" "$message"
   message="$(cat "$file")"
+
+  revolver stop
+  tput cnorm
 
   title=$(echo "$message" | head -n 1 | sed 's/# //')
   body=$(echo "$message" | tail -n +3)

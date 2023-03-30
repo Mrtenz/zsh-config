@@ -84,7 +84,6 @@ edit_file() {
   contents="$2"
 
   echo "$contents" > "$file"
-
   open -t --wait-apps "$file"
 }
 
