@@ -85,7 +85,9 @@ edit_file() {
 
 # Create a commit with the message from OpenAI.
 create_commit() {
+  revolver start "Generating commit message..."
   message="$(get_message)"
+  revolver stop
 
   file=$(mktemp)
   edit_file "$file" "$message"
