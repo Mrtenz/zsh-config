@@ -49,9 +49,9 @@ the first line, and a description on the following lines. You can use the follow
 
 A description of the change.
 
-## Why is this change necessary?
+## Changes
 
-A description of why this change is necessary."
+1. A numeric list of changes made in this pull request."
 
   example_log="commit 0d5fd751d462debf66982fb4a54b9746e5784125
 Author: Maarten Zuidhoorn <maarten@zuidhoorn.com>
@@ -69,15 +69,18 @@ Date:   Wed Mar 29 20:10:22 2023 +0200
 This pull request renames the \`.env\` file to \`.env.example\` in order to make it clear that it is just an example
 file meant for development purpose only. This change has been made as a part of a best practice review for our project.
 
-## Why is this change necessary?
-
 Currently the \`.env\` file contains sensitive information such as database credentials, API keys, and other secrets.
 Such files could be mistakenly committed to the repository or transferred to others by email or other forms, which could
 result in a security breach. By renaming it to \`.env.example\` and removing sensitive information from it, we ensure
 that the development team is reminded that they should not use the file in production environments or expose it
 publicly.
 
-This change is important to maintain the security of our project and protect against potential vulnerabilities."
+This change is important to maintain the security of our project and protect against potential vulnerabilities.
+
+## Changes
+
+1. Rename \`.env\` to \`.env.example\`.
+2. Remove sensitive information from \`.env.example\`."
 
   json=$(echo "$json" | jq --arg format "$format" --arg example_log "$example_log" --arg example_description "$example_description" --arg log "$GIT_LOG" '.messages += [{"role": "system", "content": $format}, {"role": "user", "content": $example_log}, {"role": "assistant", "content": $example_description}, {"role": "user", "content": $log}]')
 
