@@ -130,13 +130,7 @@ create_pr() {
     esac
   done
 
-  tput civis
-  revolver start "Creating pull request..."
-
   gh pr create --title "$title" --body "$body";
-
-  revolver stop
-  tput cnorm
 }
 
 create_pr
