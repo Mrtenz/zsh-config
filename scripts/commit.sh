@@ -84,7 +84,7 @@ edit_file() {
   contents="$2"
 
   echo "$contents" > "$file"
-  open -t --wait-apps "$file"
+  open -tn --wait-apps "$file"
 }
 
 # Create a commit with the message from OpenAI.

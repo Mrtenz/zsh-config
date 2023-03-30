@@ -96,7 +96,7 @@ edit_file() {
   contents="$2"
 
   echo "$contents" > "$file"
-  open -t --wait-apps "$file"
+  open -tn --wait-apps "$file"
 }
 
 create_pr() {
