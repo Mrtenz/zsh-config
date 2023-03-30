@@ -14,6 +14,10 @@ if [[ -z $(git diff-index HEAD --name-only) ]]; then
   exit 1
 fi
 
+clean_up() {
+  tput cnorm
+}
+
 trap clean_up EXIT
 
 # Inspired by OpenCommit.
@@ -83,10 +87,6 @@ edit_file() {
 
   editor=${EDITOR:-nano}
   "$editor" "$file"
-}
-
-clean_up() {
-  tput cnorm
 }
 
 # Create a commit with the message from OpenAI.
