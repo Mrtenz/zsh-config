@@ -14,6 +14,8 @@ if [[ -z $(git diff-index HEAD --name-only) ]]; then
   exit 1
 fi
 
+trap clean_up EXIT
+
 # Inspired by OpenCommit.
 # https://github.com/di-sukharev/opencommit
 get_message() {
@@ -83,11 +85,17 @@ edit_file() {
   "$editor" "$file"
 }
 
+clean_up() {
+  tput cnorm
+}
+
 # Create a commit with the message from OpenAI.
 create_commit() {
   tput civis
   revolver start "Generating commit message..."
+
   message="$(get_message)"
+
   revolver stop
   tput cnorm
 
