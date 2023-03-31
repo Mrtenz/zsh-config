@@ -121,12 +121,13 @@ create_pr() {
   echo "$body"
 
   while true; do
-    printf "Create pull request? (y/n)"
+    printf "Commit? ([y]es/[n]o/[r]etry)"
     read yn
     case $yn in
       [Yy]* ) break;;
       [Nn]* ) exit 0;;
-      * ) echo "Please answer yes or no.";;
+      [Rr]* ) create_pr; break;;
+      * ) echo "Please answer [y]es, [n]o, or [r]etry.";;
     esac
   done
 

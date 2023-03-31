@@ -106,12 +106,13 @@ create_commit() {
   echo "$message"
 
   while true; do
-    printf "Commit? (y/n)"
+    printf "Commit? ([y]es/[n]o/[r]etry)"
     read yn
     case $yn in
       [Yy]* ) git commit -am "$message"; break;;
       [Nn]* ) break;;
-      * ) echo "Please answer yes or no.";;
+      [Rr]* ) create_commit; break;;
+      * ) echo "Please answer [y]es, [n]o, or [r]etry.";;
     esac
   done
 }
